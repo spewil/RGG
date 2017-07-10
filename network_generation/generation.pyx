@@ -1,3 +1,5 @@
+# THIS CODE HAS BEEN ADAPTED FROM WORK DONE BY MATT GARROD, 2017 
+
 import numpy as np
 from scipy import sparse
 import scipy

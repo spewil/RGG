@@ -1,3 +1,4 @@
+# THIS CODE HAS BEEN ADAPTED FROM WORK DONE BY MATT GARROD, 2017 
 
 #Import required packages:
 import numpy as np
