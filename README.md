@@ -1,5 +1,3 @@
-README.md
-
 ## Generation and Control Analysis of Spatially Embedded Networks 
 
 This is an ongoing project to explore the control-theoretic principles of Random Geometric Graphs, now usually referred to as Spatially Embedded Networks. 
