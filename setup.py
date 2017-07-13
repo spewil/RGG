@@ -7,23 +7,39 @@ from Cython.Distutils import build_ext
 
 # basic way:
 
-'''
-setup(
-    ext_modules = cythonize("helloworld.pyx")
-)
-'''
+# setup(
+#     ext_modules = cythonize("network_generation/HopcroftKarp.pyx")
+# )
 
 # advanced way that ensures the .so files end up in the correct location:
 
-ext_modules=[
-    Extension("network_generation.generation", # location of the resulting .so
-             ["network_generation/generation.pyx"],) ]
+ext_modules=[Extension("network_generation.generation", # location of the resulting .so
+             ["network_generation/generation.pyx"]) ]
 
 setup(name='package',
       packages=find_packages(),
       cmdclass = {'build_ext': build_ext},
       ext_modules = ext_modules,
      )
+
+ext_modules=[Extension("network_generation.HopcroftKarp", # location of the resulting .so
+             ["network_generation/HopcroftKarp.pyx"]) ]
+
+setup(name='package',
+      packages=find_packages(),
+      cmdclass = {'build_ext': build_ext},
+      ext_modules = ext_modules,
+     )
+
+ext_modules=[Extension("network_generation.netobject", # location of the resulting .so
+             ["network_generation/netobject.pyx"]) ]
+
+setup(name='package',
+      packages=find_packages(),
+      cmdclass = {'build_ext': build_ext},
+      ext_modules = ext_modules,
+     )
+
 
 #Some info about compiling cython:
 

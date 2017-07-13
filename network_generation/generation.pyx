@@ -183,7 +183,6 @@ class Sparse_RGG_Sampler :
 		D = {k: set([]) for k in nodelist}
 		# go through and add targets to source key -- target sets
 		for i, s in enumerate(source):
-
 			D[str(s)+'s'].add(target[i])
 
 		# self.EdgeTuple = zip(source, target)

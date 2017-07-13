@@ -11,24 +11,42 @@ import network_generation.netobject as NetClass
 # from networkx.algorithms import bipartite
 import time 
 
+# ~~~ FUNCTIONS 
+
+# find the unmatched nodes 
+# must be a better way to do this, but this works for now, using the functions at hand
+def findUnmatched(graph):
+	# grab the list of nodes (the lefthand side of the bipartite)
+	# turn it into ints 0,1,2,...,N
+	unmatched = list(range(len(graph.keys())))
+	# grab the matched nodes, they will be doubled (i-->j and j-->i)
+	# this is a python list 
+	matched = HopcroftKarp(graph.copy()).maximum_matching().values()
+	# chuck the matched nodes 
+	for node in range(len(graph.keys())):
+		for match in matched:
+			if node == match:
+				unmatched.remove(node)
+	return unmatched  
+
+# ~~~~ GENERATE NET
+
 #Pick some parameters:
-Mean_Degree_Param , Number_of_Nodes , Dimension = 25.0 , 1000 , 2
+Number_of_Nodes , Dimension = 1000 , 2
+
+# 15 steps between 1 and 30 
+for Kp in range(1,30,2):
+	# ten trials of each param
+	for trial in range(10):
+
+
+
 
 #Create an instance of the class:
-start = time.time()
 Sampled_Class = NetGen.Sparse_RGG_Sampler(Mean_Degree_Param , Number_of_Nodes , Dimension , Directed = True )
-print "NetGen time: " + str(time.time() - start)
 
-#Get the adjacency matrix:
-A = Sampled_Class.Adjacency
-
-#We can also get the normal python matrix out by typing 
-# Adense = A.todense()
-# print str(Adense.shape)
-
-# print "Is A symmetric? " + str((Adense == Adense.T).all())  
-
-Network = NetClass.Network(A) 
+#Create instance of Network Class:
+Network = NetClass.Network(Sampled_Class.Adjacency) 
 
 #Compute the mean degree:
 print 'mean degree param: ' + str(Mean_Degree_Param)
@@ -52,40 +70,7 @@ D = Sampled_Class.Dictionary
 # 	if v == {}:
 # 		print 'empty set'
 
-# EL = Sampled_Class.EdgeList
-# print EL
 
-# # ~~~~~~~~ Hopcroft - Karp ~~~~~~~~~ #
-
-# LiuEx = {'a': {1, 2}, 'b': {}, 'c': {2}}
-# print LiuEx
-# LiuExMatching = HopcroftKarp(LiuEx.copy()).maximum_matching()
-# print "Liu matching: " + str(LiuExMatching)
-# SimpleCycle = {'a': {1}, 'b': {2}, 'c': {3}, 'd': {0}}
-# print "cycle matching: " + str(HopcroftKarp(SimpleCycle.copy()).maximum_matching())
-
-start = time.time()
-# find the unmatched nodes 
-def findUnmatched(graph):
-	# grab the list of nodes (the lefthand side of the bipartite)
-	# turn it into ints 0,1,2,...,N
-	unmatched = list(range(len(graph.keys())))
-	# grab the matched nodes, they will be doubled (i-->j and j-->i)
-	# this is a python list 
-	matched = HopcroftKarp(graph.copy()).maximum_matching().values()
-	# chuck the matched nodes 
-	for node in range(len(graph.keys())):
-		for match in matched:
-			if node == match:
-				unmatched.remove(node)
-	return unmatched  
-	# must be a better way to do this, but this works for now, using the functions at hand
-print "HK time: " + str(time.time() - start)
-
-# print '\n'
-# print "unmatched nodes Liu: " + str(findUnmatched(LiuEx))
-# print SimpleCycle
-# print "unmatched nodes cycle: " + str(findUnmatched(SimpleCycle))
 
 print 'unmatched nodes: ' + str(findUnmatched(D))
 
