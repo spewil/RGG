@@ -4,7 +4,7 @@ import numpy as np
 from scipy import sparse
 import scipy
 from scipy import special
-
+from random import random
 
 def Top_Hat(r, r_c,pr) :
 	
@@ -33,8 +33,6 @@ def Top_Hat(r, r_c,pr) :
 
 	Value of the top hat function at r
 
-
-
 	"""
 	
 	if r < r_c :
@@ -45,56 +43,9 @@ def Top_Hat(r, r_c,pr) :
 	return P
 
 
-class Sparse_Erdos_Sample : 
-
-	def __init__(self,N,Kappa) : 
-
-		"""
-		Generates sparse adjacency matrix for an Erdos Renyi Random Graph
-		
-		 
-		Parameters
-		------------
-		
-		N : int 
-		
-		Number of nodes in the network
-		
-		Kappa : double
-		
-		Mean degree parameter:
-		
-		
-		"""
-		#Compute the probability required to get the desired mean degree:
-		p = Kappa/float(N)
-		
-		#Empty array to stroe edge lists:
-		
-		I = [ ] 
-		J = [ ]
-		
-		for i in range(N) : 
-			for j in range(i+1,N) :
-				
-				u = np.random.uniform(0,1.0)
-				
-				if u < p :
-					I.append(i)
-					J.append(j)
-					I.append(j)
-					J.append(i)
-		#Combine these to obtain a sparse matrix:
-		A = sparse.coo_matrix((np.ones_like(I), (I, J)) , shape = (N,N) , dtype=float ).tocsr()
-		
-		self.Adjacency = A
-		self.Label = 'Erdos'
-		self.Param_String = "_N_" + str(N) + "_K_" + str( N*p ) 
-
-
 class Sparse_RGG_Sampler : 
 
-	def __init__(self,Kappa,N,d, shortcut_prob = 0,  Dom_Size = 1.0 , Return_Pos = False , NODE_POS = None , Label = 'RGG', **Optional_Parameters) :
+	def __init__(self,Kappa,N,d, shortcut_prob = 0,  Dom_Size = 1.0 , Return_Pos = False , NODE_POS = None , Label = 'RGG' , Directed = False , **Optional_Parameters) :
 	
 
 		"""
@@ -154,27 +105,25 @@ class Sparse_RGG_Sampler :
 		cdef double dist
 		
 		
-		
 		#Make sure the mean degree is a float so that the next computation works:
 		Kappa = float(Kappa)
 		r_c =    (1.0/((3.141592)**0.5) )*(( ((Kappa)/N)*scipy.special.gamma( (d +2.0)/2.0  )   )**(1.0/d ) ) 
 		
 		#Define arrays to store the integar labels of the connected pairs:
-		I = [ ]
-		J = [ ]
+		source = [ ]
+		target = [ ]
 		
-		#Randomly sample the node positions:
+		#Randomly generate the node positions in the hypercube:
 		if NODE_POS == None :
+			# N-list of d-lists
 			positions = np.random.uniform(0, 1.0, (N, d))
 		else :
 			positions = NODE_POS
-		
+
+		# number of nodes 
 		cdef int n = positions.shape[0]
+		# number of dimensions 
 		cdef int q = positions.shape[1]
-		
-		n = positions.shape[0]
-		q = positions.shape[1]
-		
 		
 		for i in range(N) : 
 			for j in range(i+1,N) : 
@@ -182,7 +131,6 @@ class Sparse_RGG_Sampler :
 				dij = 0 
 
 				#Loop over number of dimensions
-
 				for k in range(q):
 					# Compute the absolute distance
 					dist = abs( positions[i, k] - positions[j, k] )
@@ -197,22 +145,49 @@ class Sparse_RGG_Sampler :
 				dij = dij**0.5             
 				
 				#Compute the connection probability:
-				probability = Top_Hat(dij , r_c , shortcut_prob )
-
+				probability = Top_Hat(dij , r_c , shortcut_prob)
+				# returns 1 if within radius, shortcut_prob otherwise 
 
 				u = np.random.uniform(0,1.0)
 			
+				# for zero shortcut probability, always true in the radius 
+				# for nonzero baseline, might be connecting long-range shortcuts 
 				if u < probability :
-					I.append(i)
-					J.append(j)
-					I.append(j)
-					J.append(i)
-		 
+					if Directed: # randomly choose the direction of the connection, unbiased 
+						# 1/2 probability for direction
+						if random() >= 0.5: # i --> j
+							source.append(i) # row 
+							target.append(j) # column 
+						else: # j --> i 
+							source.append(j)
+							target.append(i)
+					else: # undirected, so it's symmetric 
+						source.append(i) # row 
+						target.append(j) # column 
+						source.append(j)
+						target.append(i)
 
+					# can just use only dicts here, make a helper method 
+					# for translating to adjacency
 
-		#combine the edge lists in order to form a sparse adjacency matrix:                               
-		A = sparse.coo_matrix((np.ones_like(I), (I, J)) , shape = (N,N) , dtype=float ).tocsr()
-		
+		#combine the edge lists in order to form a sparse adjacency matrix:       
+		# scipy.sparse.coo_matrix(arg1, shape=None, dtype=None, copy=False)
+		# arg1 is (data, row, column)                        
+		A = sparse.coo_matrix((np.ones_like(source), (source, target)) , shape = (N,N) , dtype=float ).tocsr()
+
+		# build dictionary from the edge list (python)
+		nodelist = range(N)
+		# [1s, 2s, 3s, ...] for the lefthand side 
+		nodelist = [str(num) + 's' for num in nodelist]
+		# generate an empty dict of sets for targets 
+		D = {k: set([]) for k in nodelist}
+		# go through and add targets to source key -- target sets
+		for i, s in enumerate(source):
+
+			D[str(s)+'s'].add(target[i])
+
+		# self.EdgeTuple = zip(source, target)
+		self.Dictionary = D
 		self.Adjacency =  A
 		self.Positions = positions
 		self.Label = Label
@@ -221,16 +196,12 @@ class Sparse_RGG_Sampler :
 		else :
 			self.Param_String = "_N_" + str(N) + "_K_" + str(Kappa) + "_d_" + str(d) + "_BC_" + str(Boundaries) + '_short_' + str(shortcut_prob)
 		
-		"""
 		
 		#Return the adjacency matrix and the positions of the nodes if required.
-		if Return_Pos == True :
-			return A , positions
-		else :
-			return A	
-			
-		"""
-
+		# if Return_Pos == True :
+		# 	return A , positions
+		# else :
+		# 	return A	
 
 #General Soft RGG
 #Call the connection function of interest as an argument
@@ -379,6 +350,54 @@ class Soft_RGG_Sampler :
 			return A	
 			
 		"""	
+
+
+class Sparse_Erdos_Sample : 
+
+	def __init__(self,N,Kappa) : 
+
+		"""
+		Generates sparse adjacency matrix for an Erdos Renyi Random Graph
+		
+		 
+		Parameters
+		------------
+		
+		N : int 
+		
+		Number of nodes in the network
+		
+		Kappa : double
+		
+		Mean degree parameter:
+		
+		
+		"""
+		#Compute the probability required to get the desired mean degree:
+		p = Kappa/float(N)
+		
+		#Empty array to store edge lists:
+		
+		I = [ ] 
+		J = [ ]
+		
+		for i in range(N) : 
+			for j in range(i+1,N) :
+				
+				u = np.random.uniform(0,1.0)
+				
+				if u < p :
+					I.append(i)
+					J.append(j)
+					I.append(j)
+					J.append(i)
+		#Combine these to obtain a sparse matrix:
+		A = sparse.coo_matrix((np.ones_like(I), (I, J)) , shape = (N,N) , dtype=float ).tocsr()
+		
+		self.Adjacency = A
+		self.Label = 'Erdos'
+		self.Param_String = "_N_" + str(N) + "_K_" + str( N*p ) 
+
 		
 def Standard_String_Generator( Net_Type, **Parameters ) :
 
@@ -431,6 +450,7 @@ def Standard_String_Generator( Net_Type, **Parameters ) :
 	return Param_String 
 		
 		
+
 		
 		
 		

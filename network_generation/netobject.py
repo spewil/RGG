@@ -45,14 +45,13 @@ class Network :
 			self.Dense_Adjacency = A.todense()
 
 
-
 		#After initializing we have all the functions to compute properties of the specific network
 		#Some of these may be taken from networkx for example. 
 
 		#Functions below give us various properties of the network:
 
 	def Mean_Degree(self) :
-		Degree_array = np.array( self.Adjacency.sum(axis=0) ) 
+		Degree_array = np.array( self.Adjacency.sum(axis=1) ) 
 		return np.mean( Degree_array[0] )
 
 
