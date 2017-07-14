@@ -1,0 +1,11 @@
+cd /scratchcomp03/MGarrod_4
+qsub Script_Submit_Kap_20.0_N_1000_d_2_BC_P.sh
+qsub Script_Submit_Kap_20.0_N_1000_d_2_BC_P.sh
+qsub Script_Submit_Kap_20.0_N_1000_d_2_BC_P.sh
+qsub Script_Submit_Kap_20.0_N_1000_d_2_BC_P.sh
+qsub Script_Submit_Kap_20.0_N_1000_d_2_BC_P.sh
+qsub Script_Submit_Kap_20.0_N_1000_d_2_BC_P.sh
+qsub Script_Submit_Kap_20.0_N_1000_d_2_BC_P.sh
+qsub Script_Submit_Kap_20.0_N_1000_d_2_BC_P.sh
+qsub Script_Submit_Kap_20.0_N_1000_d_2_BC_P.sh
+qsub Script_Submit_Kap_20.0_N_1000_d_2_BC_P.sh

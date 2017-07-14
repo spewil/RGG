@@ -34,7 +34,7 @@ def findUnmatched(graph):
 # ~~~~ GENERATE NET
 
 #Pick some parameters:
-Number_of_Nodes , Dimension = 1000 , 2
+Number_of_Nodes , Dimension = 1000 , 3
 
 # Experimental Quantities 
 ND_avg = []
@@ -77,9 +77,9 @@ plt.figure()
 plt.errorbar(Avg_deg, ND_avg, yerr = ND_var)
 plt.xlabel('Mean Degree $\\langle{k}\\rangle$')
 plt.ylabel('Fraction of Driver Nodes $n_D$')
-plt.title('d = 2, N = 1000, 10 Trials')
+plt.title('d = 3, N = 1000, 10 Trials ')
 plt.grid(True)
-plt.savefig("d2N1000.png")
+plt.savefig("d3N1000.png")
 # plt.show()
 
 
