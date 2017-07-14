@@ -38,5 +38,6 @@ Thumbs.db
 
 # Cython stuff #
 ################
+.gitignore 
 build/
 cluster/
