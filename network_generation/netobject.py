@@ -10,8 +10,9 @@ import matplotlib.pyplot as plt
 
 class Network :
 	
-		
-	def __init__( self , A , Get_Dense_Adj = False ) :
+	# OLD CONSTRUCTOR 
+
+	def __init__( self , A , D, Get_Dense_Adj = False ) :
 
 		"""
 		Class to store information about a network given the data about it.
@@ -31,12 +32,10 @@ class Network :
 		Return
 		------------
 		
-		
-
-
 		"""
 		
 		self.Adjacency = A
+		self.Dictionary = D
 		#Does size need to be imported as a seperate parameter?
 		self.Network_Size = A.shape[0]
 
@@ -44,11 +43,27 @@ class Network :
 			self.Dense_Adjacency = A.todense()
 
 
-
 		#After initializing we have all the functions to compute properties of the specific network
 		#Some of these may be taken from networkx for example. 
 
 		#Functions below give us various properties of the network:
+
+
+	# def __init__( self , D) :
+		
+	# 	self.Dictionary = A
+	# 	#Does size need to be imported as a seperate parameter?
+	# 	self.Network_Size = A.shape[0]
+
+	# 	if Get_Dense_Adj == True : 
+	# 		self.Dense_Adjacency = A.todense()
+
+
+
+	# 	#Functions below give us various properties of the network:
+
+	# def get_Adjacency(self):
+	# 	self.Adjacency = 
 
 	def Mean_Degree(self) :
 		Degree_array = np.array( self.Adjacency.sum(axis=0) ) 
@@ -218,7 +233,7 @@ class Network :
 	def Largest_Comp_Fraction(self) :
 		return float(self.Largest_Connected_Component().shape[0])/float(self.Adjacency.shape[0])
 		
-	def Plot_Network(self, File_Name = "Network" , Positions = None , Show_Plot = False , Colours = None , Size = 20) :
+	def Plot_Network(self, File_Name = "Network" , Positions = None , Show_Plot = False , Colours = None , Size = 20, Directed = False) :
 		
 		"""
 		Plots a network using 
@@ -228,7 +243,14 @@ class Network :
 		figure handle??
 		
 		"""
-		
+
+		# D = self.Dictionary.copy()
+
+		# change the representation to {int: [ints]} for networkx
+		# for k in D.keys():	
+		# 	D[int(k[0])] = D.pop(k)
+		# print D 
+
 		#(optional argument? directory to save in?? ) 
 		
 		#Create a figure and clear the current 
@@ -239,28 +261,48 @@ class Network :
 			plt.figure()
 			plt.clf
 			Gfig = open( File_Name +  '.png' , 'w' )
-			graph = nx.from_numpy_matrix(self.Adjacency.todense())
+			
+			if Directed: 
+				graph = nx.DiGraph(self.Adjacency.todense())
+			else:
+				graph = nx.from_numpy_matrix(self.Adjacency.todense())
+
 			if Colours == None :
-				nx.draw_networkx(graph, node_size= Size, with_labels=False)
+				nx.draw_networkx(graph, node_size= Size, with_labels=False, arrows=True)
 			else :
-				nx.draw_networkx(graph , node_size = 100 , with_labels=False , node_color = Colours ) 
+				nx.draw_networkx(graph , node_size = Size , with_labels=False , node_color = Colours, arrows=True) 
 			
 			plt.savefig( Gfig , format = 'png' )
 			if Show_Plot == True :
 				plt.show()
-			# Gfig.close()
 			
 		else : 
 			plt.figure(2)
 			plt.clf()
 			Gfig = open( File_Name +  '.png' , 'w' )
-			graph = nx.from_numpy_matrix(self.Adjacency.todense())
-			#nx.draw_spectral(graph, node_size=15, with_labels=False)
-			#nx.draw(graph,Positions, node_size=15, with_labels=False)
+
+			if Directed: 
+				graph = nx.DiGraph(self.Adjacency.todense())
+			else:
+				graph = nx.from_numpy_matrix(self.Adjacency.todense())
+
 			if Colours == None :
-				nx.draw_networkx(graph, Positions , node_size= Size, with_labels=False)
+				nx.draw_networkx(graph, Positions , node_size= Size, with_labels = False, arrows=True)
 			else :
-				nx.draw_networkx(graph , Positions ,  node_size = 100 , with_labels=False , node_color = Colours ) 
+				nx.draw_networkx(graph , Positions ,  node_size = Size , with_labels=False , node_color = Colours, arrows=True) 
+			
+			# # pos dict 
+			# pos = {}
+			# # label dict 
+			# labels = {}
+			# idx = 0 
+			# for node in D.keys():
+			# 	pos[node] = Positions[idx]
+			# 	idx+=1 
+			# 	labels[node] = str(node)
+
+			# nx.draw_networkx_labels(graph, pos=pos, labels=labels)
+			
 			plt.savefig( Gfig , format = 'png' )
 			if Show_Plot == True :
 				plt.show()

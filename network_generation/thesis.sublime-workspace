@@ -1,0 +1,1244 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"pos",
+				"Positions"
+			],
+			[
+				"ND",
+				"ND_var"
+			],
+			[
+				"Ave",
+				"Avg_deg"
+			],
+			[
+				"Mean",
+				"Mean_Degs"
+			],
+			[
+				"ND_",
+				"ND_avg"
+			],
+			[
+				"A",
+				"Adjacency"
+			],
+			[
+				"Hop",
+				"HopcroftKarp"
+			],
+			[
+				"Li",
+				"LiuEx"
+			],
+			[
+				"find",
+				"findUnmatched"
+			],
+			[
+				"un",
+				"findUnmatched"
+			],
+			[
+				"Liu",
+				"LiuExMatching"
+			],
+			[
+				"num",
+				"num_trials"
+			],
+			[
+				"w",
+				"w"
+			],
+			[
+				"raw",
+				"rawdata"
+			],
+			[
+				"set",
+				"set_xlim"
+			],
+			[
+				"cdf",
+				"cdf"
+			],
+			[
+				"new",
+				"new_nums"
+			],
+			[
+				"max",
+				"maxstddevs"
+			],
+			[
+				"ma",
+				"maxavgs"
+			],
+			[
+				"ran",
+				"rand_list"
+			],
+			[
+				"rand",
+				"rand_list"
+			],
+			[
+				"curr",
+				"curr_neighborhood"
+			],
+			[
+				"rand_",
+				"rand_list"
+			],
+			[
+				"degree",
+				"degree"
+			],
+			[
+				"KSst",
+				"KSstats"
+			],
+			[
+				"KS",
+				"KSpvalues"
+			],
+			[
+				"r",
+				"rsquaredpvalues"
+			],
+			[
+				"linreg",
+				"linregfig"
+			],
+			[
+				"KSsta",
+				"KSstat"
+			],
+			[
+				"coll",
+				"collapsek"
+			],
+			[
+				"khi",
+				"khist"
+			],
+			[
+				"kh",
+				"khist"
+			],
+			[
+				"nume",
+				"num_added"
+			],
+			[
+				"job",
+				"jobfinishtimes"
+			],
+			[
+				"order",
+				"orderlist"
+			],
+			[
+				"or",
+				"ordersorted"
+			],
+			[
+				"orde",
+				"orderlist"
+			],
+			[
+				"E",
+				"E_matrix"
+			],
+			[
+				"ind",
+				"ind_start"
+			],
+			[
+				"time",
+				"timeCP"
+			],
+			[
+				"dep",
+				"dependencies"
+			],
+			[
+				"criti",
+				"critical_path"
+			],
+			[
+				"to",
+				"to_numbers"
+			],
+			[
+				"collapse",
+				"collapseprob"
+			],
+			[
+				"col",
+				"collapse"
+			],
+			[
+				"colla",
+				"collapsefig"
+			],
+			[
+				"collap",
+				"collapsefig"
+			],
+			[
+				"rawdataN",
+				"rawdataN"
+			],
+			[
+				"logdataN",
+				"logdataN"
+			],
+			[
+				"j",
+				"j"
+			],
+			[
+				"de",
+				"degree_list"
+			],
+			[
+				"line",
+				"lineWidth"
+			],
+			[
+				"Start",
+				"startNo"
+			],
+			[
+				"start",
+				"startNo"
+			],
+			[
+				"num_e",
+				"num_experiments"
+			],
+			[
+				"degre",
+				"degree_list"
+			],
+			[
+				"nodes",
+				"nodes_to_add"
+			],
+			[
+				"naive",
+				"naive_theory"
+			],
+			[
+				"comp",
+				"componentlist"
+			],
+			[
+				"max5",
+				"max5size"
+			],
+			[
+				"max10",
+				"max10values"
+			],
+			[
+				"diff",
+				"difference_val"
+			],
+			[
+				"pe",
+				"max_peak_increase"
+			],
+			[
+				"max_C",
+				"max_cars_withCrash"
+			],
+			[
+				"unus",
+				"unusedRoadType"
+			],
+			[
+				"used",
+				"usedRoadType"
+			],
+			[
+				"move",
+				"move_cars"
+			],
+			[
+				"unu",
+				"unusedRoadType"
+			],
+			[
+				"times",
+				"times"
+			],
+			[
+				"car",
+				"carCrash"
+			],
+			[
+				"after",
+				"after_move"
+			],
+			[
+				"le",
+				"leftovers"
+			],
+			[
+				"cars",
+				"cars"
+			],
+			[
+				"check",
+				"check1"
+			],
+			[
+				"next",
+				"next_node"
+			],
+			[
+				"i",
+				"i"
+			],
+			[
+				"fit",
+				"fitplots"
+			],
+			[
+				"data",
+				"data_curr"
+			],
+			[
+				"coeff",
+				"coeff_t"
+			],
+			[
+				"alpha",
+				"alpha_guess"
+			],
+			[
+				"font",
+				"fontsize"
+			],
+			[
+				"x",
+				"set_xlabel"
+			],
+			[
+				"se",
+				"set_xlabel"
+			],
+			[
+				"mof",
+				"mom_fit_fit"
+			],
+			[
+				"coef",
+				"coeff_momfit"
+			],
+			[
+				"mom_",
+				"mom_fit_fit"
+			],
+			[
+				"mom",
+				"mom_fit"
+			],
+			[
+				"av",
+				"av_size"
+			],
+			[
+				"plot_data",
+				"plot_data_b"
+			],
+			[
+				"nex",
+				"next_node"
+			],
+			[
+				"ne",
+				"next_node"
+			],
+			[
+				"h_scal",
+				"h_scaling_less_tc"
+			],
+			[
+				"t_less",
+				"t_less_tc"
+			],
+			[
+				"c",
+				"c"
+			],
+			[
+				"sc",
+				"scaled_time"
+			],
+			[
+				"scaled",
+				"scaled_time"
+			],
+			[
+				"h_m",
+				"h_means"
+			],
+			[
+				"bin",
+				"bin_array_s"
+			],
+			[
+				"bin_arrya",
+				"bin_array_s"
+			],
+			[
+				"h_std",
+				"h_stddev"
+			],
+			[
+				"h_",
+				"h_recur"
+			],
+			[
+				"h_mean",
+				"h_mean"
+			],
+			[
+				"h_mea",
+				"h_mean"
+			],
+			[
+				"bin_arr",
+				"bin_array"
+			],
+			[
+				"smooth",
+				"h_smooth"
+			],
+			[
+				"P_of",
+				"P_of_hL"
+			],
+			[
+				"P_",
+				"P_of_hL"
+			],
+			[
+				"P_of_h",
+				"scaled_P_of_hL"
+			],
+			[
+				"h_me",
+				"h_means"
+			],
+			[
+				"poly",
+				"polyfit"
+			],
+			[
+				"save",
+				"savefig"
+			],
+			[
+				"bina",
+				"bin_array_s"
+			],
+			[
+				"h",
+				"h_mean"
+			],
+			[
+				"bin_array",
+				"bin_array_s"
+			],
+			[
+				"scla",
+				"scaled_P_of_hL"
+			],
+			[
+				"scale",
+				"scaled_h"
+			],
+			[
+				"stde",
+				"stddev"
+			],
+			[
+				"y",
+				"y"
+			],
+			[
+				"P",
+				"P_of_hL"
+			],
+			[
+				"stdd",
+				"stddev"
+			],
+			[
+				"hm",
+				"h_mean_sq"
+			],
+			[
+				"scal",
+				"scaled_time"
+			],
+			[
+				"collect",
+				"collect_256"
+			],
+			[
+				"cro",
+				"crossoversvtime"
+			],
+			[
+				"topp",
+				"toppled_off"
+			],
+			[
+				"visi",
+				"visit_end"
+			],
+			[
+				"pile",
+				"pile5"
+			],
+			[
+				"height",
+				"heights"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "generation.pyx",
+			"settings":
+			{
+				"buffer_size": 11888,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "netobject.py",
+			"settings":
+			{
+				"buffer_size": 10103,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/setup.py",
+			"settings":
+			{
+				"buffer_size": 1439,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/test.py",
+			"settings":
+			{
+				"buffer_size": 4321,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "pydot_plotting.py",
+			"settings":
+			{
+				"buffer_size": 1079,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "# pydot plotting"
+			}
+		},
+		{
+			"file": "/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/generate",
+			"settings":
+			{
+				"buffer_size": 312,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "# generating lots of graphs and saving their data"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 47.0,
+		"last_filter": "Snippet: fig",
+		"selected_items":
+		[
+			[
+				"Snippet: fig",
+				"Snippet: Figure"
+			],
+			[
+				"Snippet: eq",
+				"Snippet: Equation"
+			],
+			[
+				"Snippet: a",
+				"Snippet: align"
+			],
+			[
+				"Snippet: ",
+				"Snippet: align"
+			],
+			[
+				"Snippet: tab",
+				"Snippet: Tabular"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 239.0,
+		"history":
+		[
+			"pile = oslo(L)",
+			"len(pile.heights)",
+			"clear",
+			"clc",
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/matt/RGG_Generation_Code/Network_Ensembles/Ensemble_Class.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/network_generation/HopcroftKarp.pyx",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/dim_2_N_1000_T_10.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/dim_3_N_1000_T_10.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/.gitignore",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/profile_test.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/test.py.lprof",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/network_generation/generation.pyx copy",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/links",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/networks/project/code/BAmodel3.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/networks/project/code/part1.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/networks/project/code/part2.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/complexity/code/Task3.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/complexity/code/Task2.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/test.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/network_generation/netobject.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/network_generation/netobject.pyx",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/network_generation/netobject.pyx.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/matt/RGG_Generation_Code/Cython_Compile.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/latex/Chapter1/chapter1.tex",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/latex/Chapter2/chapter2.tex",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/RGG_KD.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/latex/Chapter3/chapter3.tex",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/latex/thesis.tex",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/latex/References/references.bib",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/HRGG_Gen.pyx",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/latex/Chapter3/untitled",
+		"/Users/spencerw/Documents/Cambridge/RESEARCH/Thesis_LaTeX/References/references.bib",
+		"/Users/spencerw/Downloads/July 3.tex",
+		"/Users/spencerw/Documents/UCL_SWC/notes/notes.tex",
+		"/Users/spencerw/Documents/resumes, applications, docs/CV Tex/currentCV/CV_Spencer_Wilson.tex",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/latex/Preamble/preamble.tex",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/latex/thesis-info.tex",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/LaTeX/letter_blank.tex",
+		"/Users/spencerw/Documents/byron/paper/biblio.bib",
+		"/Users/spencerw/Documents/byron/paper/byron_entropy.tex",
+		"/Users/spencerw/Documents/byron/notes/timeline",
+		"/Users/spencerw/Documents/byron/notes/essay.tex",
+		"/Users/spencerw/Documents/byron/paper/timeline.tex",
+		"/Users/spencerw/Documents/byron/notes/drafts/byron_entropy_LONG.tex",
+		"/Users/spencerw/Documents/byron/paper/to do",
+		"/Users/spencerw/Documents/byron/notes/cambridge companion",
+		"/Users/spencerw/Documents/byron/notes/poets and scientists",
+		"/Users/spencerw/Documents/byron/paper/byron_entropy_MEDIUM.tex",
+		"/Users/spencerw/Documents/byron/paper/CHP.tex",
+		"/Users/spencerw/Documents/byron/paper/byron_entropy_LONG.tex",
+		"/Users/spencerw/Documents/byron/notes/darkness.tex",
+		"/Users/spencerw/Documents/byron/paper/darkness.tex",
+		"/Users/spencerw/Documents/byron/notes/Thesis",
+		"/Users/spencerw/Documents/byron/paper/2--darkness.tex",
+		"/Users/spencerw/Documents/byron/notes/darkness",
+		"/Users/spencerw/Documents/byron/notes/canto I",
+		"/Users/spencerw/Documents/byron/notes/canto II",
+		"/Users/spencerw/Documents/byron/notes/canto III and IV",
+		"/Users/spencerw/Documents/byron/notes/self-replication",
+		"/Users/spencerw/Documents/byron/notes/boltzmann.tex",
+		"/Users/spencerw/Documents/byron/paper/byron_entropy.",
+		"/Users/spencerw/Documents/byron/paper/apa.tex",
+		"/Users/spencerw/Sites/spewil.github.io/projects/index.html",
+		"/Users/spencerw/Documents/byron/abstract/abstract.tex",
+		"/Users/spencerw/Documents/byron/notes/time atom theory",
+		"/Users/spencerw/Documents/byron/paper/sample.bib",
+		"/Users/spencerw/Documents/byron/notes/byron essay notes",
+		"/Users/spencerw/Documents/byron/notes/bookshrink",
+		"/Users/spencerw/Documents/byron/canto III and IV",
+		"/Users/spencerw/Documents/byron/darkness",
+		"/Users/spencerw/Documents/byron/canto II",
+		"/Users/spencerw/Documents/byron/canto I",
+		"/Users/spencerw/Documents/byron/Thesis",
+		"/Users/spencerw/Documents/byron/time atom theory",
+		"/Users/spencerw/Documents/byron/essay.tex",
+		"/Users/spencerw/Documents/byron/cambridge companion",
+		"/Users/spencerw/Sites/spewil.github.io/microblog/app/views.py",
+		"/Users/spencerw/Sites/spewil.github.io/microblog/app/templates/index.html",
+		"/Users/spencerw/Sites/spewil.github.io/microblog/app/run.py",
+		"/Users/spencerw/Sites/spewil.github.io/microblog/app/__init__.py",
+		"/Users/spencerw/Documents/byron/bookshrink",
+		"/Users/spencerw/Sites/spewil.github.io/projects/origami/index.html",
+		"/Users/spencerw/Sites/spewil.github.io/projects/gus/index.html",
+		"/Users/spencerw/Sites/spewil.github.io/projects/slider/flexslider.css",
+		"/Users/spencerw/Sites/spewil.github.io/projects/slider/jquery.flexslider.js",
+		"/Users/spencerw/Sites/spewil.github.io/projects/origami/jquery.flexslider.js",
+		"/Users/spencerw/Sites/spewil.github.io/projects/origami/flexslider.css",
+		"/Users/spencerw/Documents/resumes, applications, docs/CV Tex/clarendonCV/CV_Spencer_Wilson_Clarendon.tex",
+		"/Users/spencerw/Documents/resumes, applications, docs/CV Tex/CV_Spencer_Wilson.tex",
+		"/Users/spencerw/Documents/bookshrink/bookshrink/README.md",
+		"/Users/spencerw/Documents/bookshrink/bookshrink/requirements.txt",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/RGGnetworkx.py",
+		"/Users/spencerw/Sites/spewil.github.io/site.css",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/d3",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/quantum/exam/mastery.txt",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/complexity/code/writeup/writeup_template.tex",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/networks/project/writeup/Networks_SWilson.tex",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/networks/project/WilsonSW-NetworksCode/part3.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/networks/project/WilsonSW-NetworksCode/part2.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/networks/project/WilsonSW-NetworksCode/part1.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/networks/project/WilsonSW-NetworksCode/BAmodel3.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/networks/project/WilsonSW-NetworksCode/README.txt",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/networks/project/code/part3.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/networks/project/writeup/writeup.tex",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/networks/project/code/project.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/sci_comp/project2/writeup/writeup.tex",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/networks/project/code/BAmodel.py",
+		"/Users/spencerw/Downloads/gatehub_recovery_key.txt",
+		"/Users/spencerw/Downloads/Spencer_Wilson_Project2/seamfinding.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/sci_comp/project2/Spencer_Wilson_Project2/seamfinding.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/sci_comp/project2/code/task2/penguins.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/sci_comp/project2/code/task2/seamfinding.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/sci_comp/project2/code/task2/CAIS.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/sci_comp/project2/code/task1/taskscheduling.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/sci_comp/project2/code/task1/DAG.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/sci_comp/project2/code/task1/driver.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/sci_comp/project2/code/task1/task1.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/sci_comp/project2/code/task2/project2mastery.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/sci_comp/project2/code/task1/fast/criticalpath.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/complex_systems/project2/z_plane.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/complex_systems/project2/plotting.py",
+		"/Users/spencerw/Documents/python/signature.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/complex_systems/project2/hidecode.tplx",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/complex_systems/project2/Project2.ipynb",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/sci_comp/project2/code/project2mastery.py",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/complexity/code/writeup/writeup.tex",
+		"/Users/spencerw/Library/Application Support/Sublime Text 3/Packages/User/alignstar.sublime-snippet",
+		"/Users/spencerw/Library/Application Support/Sublime Text 3/Packages/User/equationstar.sublime-snippet",
+		"/Users/spencerw/Library/Application Support/Sublime Text 3/Packages/User/align.sublime-snippet",
+		"/Users/spencerw/Documents/digital mechanics/latex/draft0/draft0.tex",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/complex_systems/project1/writeup.tex",
+		"/Users/spencerw/Dropbox (Personal)/Imperial/classes/term2/complex_systems/project1/article_4.tex"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"Network_Generator_Class",
+			".add",
+			"value",
+			"jit",
+			"Giant",
+			"PDF",
+			"newpa",
+			"Ferti",
+			"fertil",
+			"ferti",
+			"equil",
+			"three-body",
+			"QM",
+			"CM",
+			"no longer of",
+			"jumping",
+			"Repea",
+			"repeated",
+			"Avoga",
+			"Engl",
+			"…",
+			"—",
+			"a lump of death",
+			"’",
+			"’’",
+			"--",
+			"''",
+			"\"",
+			"''",
+			"\"",
+			"Darkness",
+			"?",
+			"{blockquote}",
+			"{quote}",
+			"Khaos",
+			"niet",
+			"childe ",
+			"childe",
+			"move from ",
+			"thesis",
+			"symbols",
+			"ultimately ",
+			"jque",
+			"icon",
+			"next",
+			"../DATA",
+			"../figs",
+			"p_{inft",
+			"NEW04",
+			"BA99",
+			"KN05",
+			"MDA17",
+			"$att",
+			"$pre",
+			"$m",
+			"$med",
+			"standard err",
+			"standard",
+			"due to high v",
+			"wrap",
+			"expec",
+			"have",
+			"/num",
+			"CCDF",
+			"BAexact",
+			"BAexcact",
+			".std",
+			"stdde",
+			"error",
+			"10^3",
+			"Nod",
+			"10^3",
+			"Nod",
+			"node",
+			"Node",
+			"node",
+			"Node",
+			"rawdataB",
+			"FontSize=14",
+			"orange",
+			".6\\",
+			"mastereq",
+			"maxkBA",
+			"BAex",
+			"mastereqp",
+			"align}",
+			"degree",
+			"Maximum",
+			"{equation}",
+			"k_i",
+			"\\sum_i",
+			"print",
+			"w ",
+			"w",
+			"w)",
+			"w]",
+			"ln(",
+			"x,",
+			"x",
+			"x ",
+			"degree",
+			"k_1",
+			"x ",
+			"letting",
+			"letting m",
+			"collapse",
+			"tasksched",
+			"taskschel",
+			"jobstart",
+			"number",
+			"flatten",
+			"section",
+			"6f",
+			"print",
+			"time",
+			"counts",
+			"ax5",
+			"degree_list",
+			"infty}}",
+			"_{infty",
+			"complete",
+			"degrees_",
+			"python",
+			"num_added_",
+			"f ",
+			"numpy",
+			"componentlist",
+			"dispatch"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"...",
+			"--",
+			"'",
+			"''",
+			"{displayquote}",
+			"{blockquote}",
+			"./DATA",
+			"./figs",
+			"FontSize=16",
+			"purple",
+			".65\\",
+			"align*}",
+			"{equation*}",
+			"k",
+			"\\sum_{k=0}^{\\infty}",
+			"section*",
+			"degreetot",
+			"infty}",
+			"_{\\infty}",
+			"$\\Leftrightarrow$",
+			"$\\Rightarrow$",
+			"\\Leftrightarrow",
+			"\\Rightarrow",
+			"figs",
+			"fontsize=18",
+			".log10(",
+			"fontsize=30",
+			"rightarrow",
+			"Cref",
+			"writeup/figs/",
+			"figs/",
+			"../writeup/figs/",
+			"../writeup/figs",
+			"h_list",
+			"self.slopes"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "generation.pyx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11888,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3703,
+								3703
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Cython/Cython.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 757.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "netobject.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10103,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6721,
+								6721
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/setup.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1439,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								569,
+								569
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"file": "/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/test.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4321,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								425,
+								425
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "pydot_plotting.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1079,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								829,
+								829
+							]
+						],
+						"settings":
+						{
+							"auto_name": "# pydot plotting",
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/Users/spencerw/Dropbox (Personal)/Imperial/thesis/code/generate",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 312,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								312,
+								312
+							]
+						],
+						"settings":
+						{
+							"auto_name": "# generating lots of graphs and saving their data",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 30.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.5,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Python/Python.sublime-build",
+	"project": "thesis.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"log_bin"
+			]
+		],
+		"width": 392.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 213.0,
+	"status_bar_visible": false,
+	"template_settings":
+	{
+	}
+}

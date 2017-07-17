@@ -3,6 +3,8 @@ from Cython.Build import cythonize
 from setuptools import setup, find_packages, Extension
 from Cython.Distutils import build_ext
 
+# for profiling code 
+
 #this is only for pyx / cythonized files 
 
 # basic way:
@@ -14,7 +16,8 @@ from Cython.Distutils import build_ext
 # advanced way that ensures the .so files end up in the correct location:
 
 ext_modules=[Extension("network_generation.generation", # location of the resulting .so
-             ["network_generation/generation.pyx"]) ]
+             ["network_generation/generation.pyx"]) 
+			]
 
 setup(name='package',
       packages=find_packages(),
@@ -23,23 +26,15 @@ setup(name='package',
      )
 
 ext_modules=[Extension("network_generation.HopcroftKarp", # location of the resulting .so
-             ["network_generation/HopcroftKarp.pyx"]) ]
+             ["network_generation/HopcroftKarp.pyx"]) 
+			]
 
 setup(name='package',
       packages=find_packages(),
       cmdclass = {'build_ext': build_ext},
       ext_modules = ext_modules,
+      compiler_directives={'linetrace': True},
      )
-
-ext_modules=[Extension("network_generation.netobject", # location of the resulting .so
-             ["network_generation/netobject.pyx"]) ]
-
-setup(name='package',
-      packages=find_packages(),
-      cmdclass = {'build_ext': build_ext},
-      ext_modules = ext_modules,
-     )
-
 
 #Some info about compiling cython:
 

@@ -1,0 +1,13 @@
+# generating lots of graphs and saving their data 
+# generate the dictionaries of a bunch of graphs 
+# loading the data to analyze 
+
+d = net.Dictionary()
+
+# Writing JSON data
+with open('data.json', 'w') as f:
+     json.dump(data, f)
+
+# Reading data back
+with open('data.json', 'r') as f:
+     data = json.load(f)

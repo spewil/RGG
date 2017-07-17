@@ -12,7 +12,7 @@ import network_generation.netobject as NetClass
 import time 
 
 #Pick some parameters:
-Mean_Degree_Param , Number_of_Nodes , Dimension = 25.0 , 1000 , 2
+Mean_Degree_Param , Number_of_Nodes , Dimension = 50.0 , 5000 , 2
 
 #Create an instance of the class:
 start = time.time()
@@ -23,34 +23,37 @@ print "NetGen time: " + str(time.time() - start)
 A = Sampled_Class.Adjacency
 
 #We can also get the normal python matrix out by typing 
-# Adense = A.todense()
+Adense = A.todense()
 # print str(Adense.shape)
-
-# print "Is A symmetric? " + str((Adense == Adense.T).all())  
-
-Network = NetClass.Network(A) 
-
-#Compute the mean degree:
-print 'mean degree param: ' + str(Mean_Degree_Param)
-Mean_Deg = Network.Mean_Degree()
-print("Mean Degree = " +str(Mean_Deg) )
-
-# #We can also call a dictionary of network properties:
-# print("Properties:\n"  +str(Network.Properties()) )
-
-# Positions = np.asarray(Sampled_Class.Positions) 
-# Network.Plot_Network(File_Name = "Bounded" , Positions = Positions) # , Show_Plot = True)
 
 # # get the dictionary
 D = Sampled_Class.Dictionary
 # print D
+
 # print len(D.keys())
 # print 'dict: ' + str(D)
-# for v in D.values():
+# for v in D.values():	
 # 	if len(v) == 1:
 # 		print 'one edge'
 # 	if v == {}:
 # 		print 'empty set'
+
+print "Is A symmetric? " + str((Adense == Adense.T).all())  
+start = time.time()
+Network = NetClass.Network(A, D) 
+print "NetObject time: " + str(time.time() - start)
+
+#Compute the mean degree:
+# print 'mean degree param: ' + str(Mean_Degree_Param)
+Mean_Deg = Network.Mean_Degree()
+# print("Mean Degree = " +str(Mean_Deg) )
+
+# #We can also call a dictionary of network properties:
+# print("Properties:\n"  +str(Network.Properties()) )
+
+Positions = np.asarray(Sampled_Class.Positions) 
+# print Positions
+Network.Plot_Network(File_Name = "Bounded" , Positions = Positions, Directed = True) 
 
 # EL = Sampled_Class.EdgeList
 # print EL
@@ -64,7 +67,6 @@ D = Sampled_Class.Dictionary
 # SimpleCycle = {'a': {1}, 'b': {2}, 'c': {3}, 'd': {0}}
 # print "cycle matching: " + str(HopcroftKarp(SimpleCycle.copy()).maximum_matching())
 
-start = time.time()
 # find the unmatched nodes 
 def findUnmatched(graph):
 	# grab the list of nodes (the lefthand side of the bipartite)
@@ -80,7 +82,6 @@ def findUnmatched(graph):
 				unmatched.remove(node)
 	return unmatched  
 	# must be a better way to do this, but this works for now, using the functions at hand
-print "HK time: " + str(time.time() - start)
 
 # print '\n'
 # print "unmatched nodes Liu: " + str(findUnmatched(LiuEx))
@@ -88,6 +89,9 @@ print "HK time: " + str(time.time() - start)
 # print "unmatched nodes cycle: " + str(findUnmatched(SimpleCycle))
 
 print 'unmatched nodes: ' + str(findUnmatched(D))
+start = time.time()
+findUnmatched(D)
+print "Matching time: " + str(time.time() - start)
 
 # # ~~~~~~ Periodic BCs ~~~~~~~
 

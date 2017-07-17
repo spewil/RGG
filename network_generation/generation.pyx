@@ -6,7 +6,7 @@ import scipy
 from scipy import special
 from random import random
 
-def Top_Hat(r, r_c,pr) :
+def Top_Hat(r, r_c, pr) :
 	
 	"""
 	Top hat function with a = 1 , b = pr
@@ -103,8 +103,9 @@ class Sparse_RGG_Sampler :
 		cdef int p = 2
 		cdef double dij
 		cdef double dist
-		
-		
+		cdef int number
+		cdef int value
+
 		#Make sure the mean degree is a float so that the next computation works:
 		Kappa = float(Kappa)
 		r_c =    (1.0/((3.141592)**0.5) )*(( ((Kappa)/N)*scipy.special.gamma( (d +2.0)/2.0  )   )**(1.0/d ) ) 
@@ -124,7 +125,7 @@ class Sparse_RGG_Sampler :
 		cdef int n = positions.shape[0]
 		# number of dimensions 
 		cdef int q = positions.shape[1]
-		
+				
 		for i in range(N) : 
 			for j in range(i+1,N) : 
 
@@ -146,8 +147,8 @@ class Sparse_RGG_Sampler :
 				
 				#Compute the connection probability:
 				probability = Top_Hat(dij , r_c , shortcut_prob)
+				
 				# returns 1 if within radius, shortcut_prob otherwise 
-
 				u = np.random.uniform(0,1.0)
 			
 				# for zero shortcut probability, always true in the radius 
@@ -174,18 +175,19 @@ class Sparse_RGG_Sampler :
 		# scipy.sparse.coo_matrix(arg1, shape=None, dtype=None, copy=False)
 		# arg1 is (data, row, column)                        
 		A = sparse.coo_matrix((np.ones_like(source), (source, target)) , shape = (N,N) , dtype=float ).tocsr()
-
+		
 		# build dictionary from the edge list (python)
 		nodelist = range(N)
 		# [1s, 2s, 3s, ...] for the lefthand side 
 		nodelist = [str(num) + 's' for num in nodelist]
-		# generate an empty dict of sets for targets 
-		D = {k: set([]) for k in nodelist}
+		
+		# generate an empty dict of lists for targets 
+		D = {k: [] for k in nodelist}
+		
 		# go through and add targets to source key -- target sets
-		for i, s in enumerate(source):
-			D[str(s)+'s'].add(target[i])
+		for number, value in enumerate(source):
+			D[str(value)+'s'].append(target[number])
 
-		# self.EdgeTuple = zip(source, target)
 		self.Dictionary = D
 		self.Adjacency =  A
 		self.Positions = positions
