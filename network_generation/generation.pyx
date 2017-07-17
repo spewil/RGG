@@ -1,5 +1,5 @@
 # THIS CODE HAS BEEN ADAPTED FROM WORK DONE BY MATT GARROD, 2017
-
+import pickle
 from random import random
 from scipy import sparse
 from scipy import special
@@ -47,13 +47,14 @@ def Top_Hat(r, r_c, pr) :
 
 
 
-class PeterRGGNetwork(object):
-	def __init__(self, kappa, n, d, shortcut_prob=0, boundary='s'):
+class PeterRGGEnsemble(object):
+	def __init__(self, kappa, n, d, shortcut_prob=0, boundary='s', samples=None):
 		self.kappa = kappa
 		self.n = n
 		self.d = d
 		self.shortcut_prob = shortcut_prob
 		self.boundary = boundary
+		self.samples = samples or self.generate_samples()
 
 	def create_rgg_sample(self):
 		Kappa = self.kappa
@@ -138,6 +139,48 @@ class PeterRGGNetwork(object):
 			boundary=Boundary,
 			shortcut_prob=shortcut_prob,
 		)
+
+	def generate_samples(self):
+		self.samples = [self.create_rgg_sample() for i in xrange(100)]
+
+	def param_string(self):
+		# Param_String
+		if abs(float(self.shortcut_prob)) == 0.0 :
+			return "RGG_K_" + str(self.kappa) + "_N_" + str(self.n) + "_d_" + str(self.d) + "_BC_" + str(self.boundary)
+
+		return "RGG_K_" + str(self.kappa) + "_N_" + str(self.n) + "_d_" + str(self.d) + "_BC_" + str(self.boundary) + '_short_' + str(self.shortcut_prob)
+
+	def to_dict(self):
+		return {
+			'kappa': self.kappa,
+			'n': self.n,
+			'd': self.d,
+			'boundary': self.boundary,
+			'shortcut_prob': self.shortcut_prob,
+			'samples': [s.to_dict() for s in self.samples]
+		}
+
+	@classmethod
+	def from_dict(self, data):
+		return PeterRGGEnsemble(
+			kappa=data['kappa'],
+			n=data['n'],
+			d=data['d'],
+			boundary=data['boundary'],
+			shortcut_prob=data['shortcut_prob'],
+			samples=[PeterRGGSample.from_dict(s) for s in data['samples']],
+		)
+
+	def to_disk(self, folder='rgg_samples'):
+		filename = './%s/%s.pickle' % (folder, self.param_string())
+		with open(filename, 'w') as fout:
+			pickle.dump(self.to_dict(), fout)
+
+	@classmethod
+	def from_disk(self, path):
+		with open(path, 'r') as fin:
+			data = pickle.load(fin)
+		return PeterRGGEnsemble.from_dict(data)
 
 
 

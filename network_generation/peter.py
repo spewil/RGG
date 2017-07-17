@@ -71,9 +71,10 @@ class PeterRGGSample(object):
 
         # XXX These are the new methods
 
-        def to_string(self):
-            # Return a JSON representation of this sample
-            return pickle.dumps({
+
+
+        def to_dict(self):
+            return {
                 'kappa': self.kappa,
                 'n': self.n,
                 'd': self.d,
@@ -83,11 +84,10 @@ class PeterRGGSample(object):
                 'source': self.source,
                 'target': self.target,
                 'positions': self.positions,
-            })
+            }
 
         @classmethod
-        def from_string(cls, pickle_string):
-            data = pickle.loads(pickle_string)
+        def from_dict(cls, data):
             return PeterRGGSample(
                 kappa=data['kappa'],
                 n=data['n'],
