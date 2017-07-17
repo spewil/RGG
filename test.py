@@ -3,12 +3,8 @@
 import matplotlib
 import os
 import numpy as np
-from network_generation.HopcroftKarp import HopcroftKarp
-from hopcroftkarp import HopcroftKarp
-import network_generation.generation as NetGen
-import network_generation.netobject as NetClass
-# import networkx as nx
-# from networkx.algorithms import bipartite
+import network_generation.generation as gen
+import network_generation.netobject as netobj
 import time 
 
 #Pick some parameters:
@@ -66,22 +62,6 @@ Network.Plot_Network(File_Name = "Bounded" , Positions = Positions, Directed = T
 # print "Liu matching: " + str(LiuExMatching)
 # SimpleCycle = {'a': {1}, 'b': {2}, 'c': {3}, 'd': {0}}
 # print "cycle matching: " + str(HopcroftKarp(SimpleCycle.copy()).maximum_matching())
-
-# find the unmatched nodes 
-def findUnmatched(graph):
-	# grab the list of nodes (the lefthand side of the bipartite)
-	# turn it into ints 0,1,2,...,N
-	unmatched = list(range(len(graph.keys())))
-	# grab the matched nodes, they will be doubled (i-->j and j-->i)
-	# this is a python list 
-	matched = HopcroftKarp(graph.copy()).maximum_matching().values()
-	# chuck the matched nodes 
-	for node in range(len(graph.keys())):
-		for match in matched:
-			if node == match:
-				unmatched.remove(node)
-	return unmatched  
-	# must be a better way to do this, but this works for now, using the functions at hand
 
 # print '\n'
 # print "unmatched nodes Liu: " + str(findUnmatched(LiuEx))

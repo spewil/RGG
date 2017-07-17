@@ -6,13 +6,15 @@ import networkx as nx
 import matplotlib
 matplotlib.use('Agg') 
 import matplotlib.pyplot as plt
-
+from hopcroftkarp import HopcroftKarp
 
 class Network :
 	
-	# OLD CONSTRUCTOR 
+	###############	
+	# CONSTRUCTOR #
+	###############
 
-	def __init__( self , A , D, Get_Dense_Adj = False ) :
+	def __init__( self , Sample) :
 
 		"""
 		Class to store information about a network given the data about it.
@@ -24,291 +26,126 @@ class Network :
 		Parameters
 		-------------
 
-		A: Scipy Sparse Matrix (csr)
-		
-		Get_Dense_Adj : bool
-		
-		
-		Return
-		------------
-		
+		Sample
+			A network generation object 
+				Source
+				Target
+				Positions
 		"""
 		
+		# make this work OO version... this is stupid 
+		# Params
+		self.Label = Sample.Label
+		self.K = Sample.K
+		self.N = Sample.N
+		self.d = Sample.d
+		self.BC = Sample.BC
+		self.Param_String = Sample.Param_String
+
+		# Data 
+		self.S = Sample.Source 
+		self.T = Sample.Target 
+		# if it's an RGG, store the positions 
+		if self.Label == 'RGG':
+			self.Positions = Sample.Positions
+
+		### Create A ### 
+
+		#combine the edge lists in order to form a sparse adjacency matrix:       
+		# scipy.sparse.coo_matrix(arg1, shape=None, dtype=None, copy=False)
+		# arg1 is (data, row, column)                        
+		A = sparse.coo_matrix((np.ones_like(self.S), (self.S, self.T)) , shape = (self.N,self.N) , dtype=float ).tocsr()
 		self.Adjacency = A
-		self.Dictionary = D
-		#Does size need to be imported as a seperate parameter?
-		self.Network_Size = A.shape[0]
+		self.Adense = A.todense()
 
-		if Get_Dense_Adj == True : 
-			self.Dense_Adjacency = A.todense()
+		### Create D ###
 
+		# bipartite dictionary representation of directed graph 
 
-		#After initializing we have all the functions to compute properties of the specific network
-		#Some of these may be taken from networkx for example. 
+		# build dictionary from the edge list (python)
+		nodelist = range(self.N)
+		# ['1s', '2s', '3s', ...] for the lefthand side of the bipartite 
+		nodelist = [str(num) + 's' for num in nodelist]
+		
+		# generate an empty dict of lists for targets 
+		D = {k: [] for k in nodelist}
+		
+		# go through and add targets to source key -- target sets
+		for idx, val in enumerate(self.S):
+			D[str(val)+'s'].append(self.T[idx])
 
-		#Functions below give us various properties of the network:
+		self.BipartiteDict = D
 
+	#
 
-	# def __init__( self , D) :
-		
-	# 	self.Dictionary = A
-	# 	#Does size need to be imported as a seperate parameter?
-	# 	self.Network_Size = A.shape[0]
+	def Find_Unmatched(self):
 
-	# 	if Get_Dense_Adj == True : 
-	# 		self.Dense_Adjacency = A.todense()
+		graph = self.BipartiteDict.copy() 
 
+		# list of node indices 0,1,2,...,N 
+		unmatched = range(self.N)
 
+		# find matched nodes
+		# (they will be doubled (i-->j and j-->i) ) 
+		matched = HopcroftKarp(graph).maximum_matching().values()
+		# remove the matched nodes to leave the unmatched 
+		for node in range(self.N):
+			for match in matched:
+				# if node exists in matching
+				if node == match:
+					# remove it 
+					unmatched.remove(node)
+		return unmatched  
 
-	# 	#Functions below give us various properties of the network:
+	############
+	# PLOTTING #
+	############
 
-	# def get_Adjacency(self):
-	# 	self.Adjacency = 
+	def Plot_Network(self, unmatched = None, Size = 20, label=False) :            
 
-	def Mean_Degree(self) :
-		Degree_array = np.array( self.Adjacency.sum(axis=0) ) 
-		return np.mean( Degree_array[0] )
+		if self.d != 2:
+			raise ValueError('The graph is not 2D!')
 
-
-	def Min_Degree(self) :
-		Degree_array = np.array( self.Adjacency.sum(axis=0) ) 
-		return min( Degree_array[0]  ) 
-		
-	def Max_Degree(self) : 
-		Degree_array = np.array( self.Adjacency.sum(axis=0) ) 
-		return max( Degree_array[0]  ) 
-		
-	def Edges(self) :
-		"""
-		Returns the number of edges in the network
-		
-		"""
-		return len( self.Adjacency.data)/2
-		
-	def Degrees(self) :
-	
-		"""
-		Degrees:
-		
-		Returns
-		----------
-		
-		Degrees[0] :  list
-		
-		A list containing the degrees of the network.
-		
-		
-		
-		"""
-		degrees = np.array( self.Adjacency.sum(axis=0) )
-		return degrees[0]
-
-	def Laplacian(self) :
-	
-		"""
-		
-		Constructs the laplacian matrix of the network
-		(note is the laplacian defined with the convention L = D - A,
-		where D is the diagonal matrix of degrees and A is the adjacency matrix of the network)
-		
-		Returns
-		----------
-		
-		L : scipy sparse matrix
-		
-		Laplacian matrix for the network
-		
-		
-		
-		"""
-	
-	
-		degrees = np.array( self.Adjacency.sum(axis=0) )
-		Is = np.arange(0,self.Network_Size,1)
-		D = sparse.coo_matrix((degrees[0], (Is, Is)) , shape = (self.Network_Size,self.Network_Size) , dtype=float).tocsr()
-		return  - self.Adjacency + D
-
-
-	def Mean_Path_Length(self) :
-		
-		"""
-		
-		Uses the built in function from networkx to compute the average shortest path
-		length of the network.
-		
-		This method only works if the graph is connected. 
-		
-		Returns
-		---------
-		
-		Path_Len : float 
-		
-		Average shortest path length between nodes in the network
-		
-		#Average shortst path length of the largest connected component of the network
-		
-		
-		"""
-		
-		#NB: must first compute the fiant comp?? 
-		
-		A_Giant = self.Largest_Connected_Component()
-		G=nx.from_numpy_matrix(A_Giant.todense())
-		Path_Len = nx.average_shortest_path_length(G)
-		
-		return Path_Len
-		
-	def Av_Clustering_Coefficient(self) :
-	
-		"""
-		
-		Calculate the average clustering coefficient of the network
-		using the method from networkx
-		
-		Returns :
-		
-		Clust : float
-		
-		Average Clustering Coefficient of the network
-		
-		
-		"""
-		
-		G=nx.from_numpy_matrix(self.Adjacency.todense())
-		Clust = nx.average_clustering(G)
-		return Clust
-		
-	def Degree_Assortativity(self) : 
-		#print("Type = " + str(  self.Adjacency ) ) 
-		#print( self.Adjacency ) 
-		G=nx.from_numpy_matrix(self.Adjacency.todense())
-		Assort = nx.degree_assortativity_coefficient(G) 
-		return Assort
-		
-	def Edge_Betweenness_Centrality_Distribution(self) :
-		
-		G=nx.from_numpy_matrix(self.Adjacency.todense())
-		E_B_C_D = nx.edge_betweenness_centrality(G)
-		
-		return E_B_C_D.values()
-		
-	def Diameter(self) : 
-		G=nx.from_numpy_matrix(self.Adjacency.todense())
-		Diam = nx.diameter(G)
-		return Diam
-		
-	def Components(self) :
-	
-		"""
-		Return a list of the connected components in the network
-		
-		
-		"""
-		Components = Giant.Components(self.Adjacency  )
-		return Components
-		
-	def Largest_Connected_Component(self) :
-	
-		"""
-		
-		Returns: 
-		
-		Adjacency matrix corresponding to the largest connected component of the network
-		
-		Optional? positions of the nodes in the largest connected component
-		
-		"""
-	
-		index, Giant_Comp_Vec = max(enumerate(self.Components() ), key = lambda tup: len(tup[1]))
-		A_Giant = self.Adjacency[Giant_Comp_Vec, :].tocsc()[:, Giant_Comp_Vec]
-		A_Giant = A_Giant.tocsr()
-		N_Giant = len(Giant_Comp_Vec)
-		return A_Giant
-		
-	def Largest_Connected_Min_Degree(self) :
-		A_Giant = self.Largest_Connected_Component()
-		Degree_array = np.array( A_Giant.sum(axis=0) ) 
-		return min( Degree_array[0]  ) 
-		
-	def Largest_Comp_Fraction(self) :
-		return float(self.Largest_Connected_Component().shape[0])/float(self.Adjacency.shape[0])
-		
-	def Plot_Network(self, File_Name = "Network" , Positions = None , Show_Plot = False , Colours = None , Size = 20, Directed = False) :
-		
-		"""
-		Plots a network using 
-		
-		Returns 
-		---------
-		figure handle??
-		
-		"""
-
-		# D = self.Dictionary.copy()
-
-		# change the representation to {int: [ints]} for networkx
-		# for k in D.keys():	
-		# 	D[int(k[0])] = D.pop(k)
-		# print D 
-
-		#(optional argument? directory to save in?? ) 
-		
-		#Create a figure and clear the current 
-		#figure just in case
-		
-		#If no node positions specified just use standard layout:
-		if Positions.all() == None: 
+		else: 
+			File_Name = str(self.Param_String) + '_plot'
+			
 			plt.figure()
 			plt.clf
 			Gfig = open( File_Name +  '.png' , 'w' )
 			
-			if Directed: 
-				graph = nx.DiGraph(self.Adjacency.todense())
-			else:
-				graph = nx.from_numpy_matrix(self.Adjacency.todense())
+			# make a networkx graph object 
+			graph = nx.DiGraph(self.Adjacency.todense())
 
-			if Colours == None :
-				nx.draw_networkx(graph, node_size= Size, with_labels=False, arrows=True)
-			else :
-				nx.draw_networkx(graph , node_size = Size , with_labels=False , node_color = Colours, arrows=True) 
-			
+			# make position and label dicts 
+			posDict = {}
+			for i in range(len(self.Positions)):
+				posDict[i] = self.Positions[i] 
+
+			# color the nodes 
+			if unmatched != None: 
+				colorList = []
+				for i in range(self.N):
+					if i in unmatched:
+						colorList.append('green')
+					else:
+						colorList.append('red')
+
+			# draw the network 
+			if label: 
+				nx.draw_networkx(graph, pos=posDict, with_labels=True, node_color=colorList, node_size=Size, width = 0.3)
+			else: 
+				nx.draw_networkx(graph, pos=posDict, with_labels=False, node_color=colorList, node_size=Size, width = 0.3)
+
 			plt.savefig( Gfig , format = 'png' )
-			if Show_Plot == True :
-				plt.show()
-			
-		else : 
-			plt.figure(2)
-			plt.clf()
-			Gfig = open( File_Name +  '.png' , 'w' )
 
-			if Directed: 
-				graph = nx.DiGraph(self.Adjacency.todense())
-			else:
-				graph = nx.from_numpy_matrix(self.Adjacency.todense())
+	####################
+	# NETWORK MEASURES #
+	####################
 
-			if Colours == None :
-				nx.draw_networkx(graph, Positions , node_size= Size, with_labels = False, arrows=True)
-			else :
-				nx.draw_networkx(graph , Positions ,  node_size = Size , with_labels=False , node_color = Colours, arrows=True) 
-			
-			# # pos dict 
-			# pos = {}
-			# # label dict 
-			# labels = {}
-			# idx = 0 
-			# for node in D.keys():
-			# 	pos[node] = Positions[idx]
-			# 	idx+=1 
-			# 	labels[node] = str(node)
-
-			# nx.draw_networkx_labels(graph, pos=pos, labels=labels)
-			
-			plt.savefig( Gfig , format = 'png' )
-			if Show_Plot == True :
-				plt.show()
-			# Gfig.close()
-			
-
+	def Mean_Degree(self) :
+		Degree_array = np.array( self.Adjacency.sum(axis=0) ) 
+		# 2x because of directedness  
+		return 2*np.mean( Degree_array[0] )
 
 	def Properties(self, *Additional_Properties) : 
 	
@@ -324,11 +161,6 @@ class Network :
 		
 		Possible strings are:
 		- "Algebraic Connectivity"
-		- "Largest Laplace Eigenvalue"
-		- "Largest Adjacency Eigenvalue"
-		-  "Mean Path Length"
-		- "Average Clustering Coefficient"
-		
 		
 		Returns
 		-----------
@@ -360,41 +192,6 @@ class Network :
 		if "Algebraic Connectivity" in Additional_Properties : 
 			Property_Dict["Algebraic Connectivity"] = SEV.Smallest_Non_Zero_EV( self.Laplacian() ) 
 			
-		if "Largest Laplace Eigenvalue" in Additional_Properties :
-			Property_Dict["Largest Laplace Eigenvalue"] = SEV.Largest_EV( self.Laplacian() )
-		
-		if "Largest Adjacency Eigenvalue" in Additional_Properties :
-			Property_Dict["Largest Adjacency Eigenvalue"] = SEV.Largest_EV( self.Adjacency ) 
-		
-		#Other Properties:
-		if "Mean Path Length" in Additional_Properties :
-			Property_Dict["Mean Path Length"] = self.Mean_Path_Length()
-			
-		if "Average Clustering Coefficient" in Additional_Properties : 
-			Property_Dict["Average Clustering Coefficient"] = self.Av_Clustering_Coefficient()
-			
-		if "Largest Connected Component Fraction" in Additional_Properties : 
-			Property_Dict["Largest Connected Component Fraction"] = self.Largest_Comp_Fraction()
-		
-		if "Degree Distribution" in Additional_Properties :
-			Property_Dict["Degree Distribution"] = self.Degrees()
-			
-		if "Adjacency Spectrum" in Additional_Properties :
-			Property_Dict["Adjacency Spectrum"] = SEV.Sparse_Spectrum( self.Adjacency ) 
-		
-		if "Laplacian Spectrum" in Additional_Properties :
-			Property_Dict["Laplacian Spectrum"] = SEV.Sparse_Spectrum( self.Laplacian() ) 
-			print("Sample Laplace" ) 		
-		
-		if "Degree Assortativity" in Additional_Properties :
-			Property_Dict["Degree Assortativity"] = self.Degree_Assortativity() 
-			
-		if "Largest Connected Minimum Degree" in Additional_Properties :
-			Property_Dict["Largest Connected Minimum Degree"] = self.Largest_Connected_Min_Degree()
-			
-		if "Max Edge Betweenness Centraility" in Additional_Properties :
-			Property_Dict["Max Edge Betweenness Centraility"] = max( self.Edge_Betweenness_Centrality_Distribution() ) 
-		
 		return Property_Dict
 		
 		
