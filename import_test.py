@@ -9,10 +9,10 @@ import time
 #Pick some parameters:
 Kappa , Num_Nodes , d = 20 , 10 , 2
 
-# Reading JSON data
-with open('data.json', 'r') as f:
-     data = json.load(f)
-# netObj test 
+# Create an instance of the class:
+start = time.time()
+RGG_Instance = netGen.RGG_Sample(Kappa,Num_Nodes,d,Boundary='s')
+print "Network Generation time: " + str(time.time() - start)
 
 # Make a Network Object 
 start = time.time()

@@ -7,6 +7,7 @@ import matplotlib
 matplotlib.use('Agg') 
 import matplotlib.pyplot as plt
 from hopcroftkarp import HopcroftKarp
+import pydot
 
 class Network :
 	
@@ -137,6 +138,31 @@ class Network :
 				nx.draw_networkx(graph, pos=posDict, with_labels=False, node_color=colorList, node_size=Size, width = 0.3)
 
 			plt.savefig( Gfig , format = 'png' )
+
+			Gdot = nx.nx_pydot.to_pydot(graph)   #converts G to Gp in pydot format
+ 
+			# ... some code that makes the Gp pydot graph prettier
+			# the default for a DiGraph will have arrows
+			# i will often do the following
+			# edges = Gp.get_edge_list()
+			# for e in edges:
+			#      source = e.get_source()
+			#      target = e.get_destination()
+			#      if source == 'some string that is the name of the source with edges that you want to make look different' and target == 'some string2':
+			#        e.set_style('bold')
+			#        e.set_color('red')
+			#        e.set_arrowhead('tee')  # use tee instead of arrow
+			#        e.set_label('label for edge')
+			# can do similar stuff with nodes
+			 
+			# now output your graph to a file and display it
+			File_Name = str(self.Param_String) + '_plot'
+			Gdot.write_png(File_Name + '_dot.png', prog='dot')  
+			# writes Gp to png file #use prog='neato' or 'fdp' for undirected graph (no default arrows for this)
+			# the next 2 lines open and display the png file
+			# im = Image.open(File_Name + '_dot.png') 
+			# im.show()
+			 
 
 	####################
 	# NETWORK MEASURES #

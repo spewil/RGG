@@ -8,7 +8,7 @@ import networkx as nx
 import time 
 import json
 
-Kappa, Num_Nodes, d = 20, 1000, 2
+Kappa, Num_Nodes, d = 20, 100, 2
 
 # make an RGG with solid BCs
 start = time.time()
@@ -24,14 +24,6 @@ print "generation time for RGG_" + RGGp.BC + " of " + str(Num_Nodes) + " nodes: 
 start = time.time()
 ER = gen.ER_Sample(Kappa,Num_Nodes)
 print "generation time for ER of " + str(Num_Nodes) + " nodes: " + str(time.time() - start)
-
-# ~~~ #
-
-# Writing JSON data
-with open(str(RGGs.Param_String)+'.json', 'w') as f:
-     json.dumps(RGGs.__dict__, f)
-
-# ~~~ #
 
 # compare with networkx
 from scipy import special

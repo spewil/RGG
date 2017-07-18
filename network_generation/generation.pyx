@@ -157,22 +157,22 @@ class RGG_Sample :
 						T.append(i)
 
 		# source, target, and positions lists 
-		self.Source = np.asarray(S)
-		# self.Target = T
-		# self.Positions = np.asarray(positions)
+		self.Source = S
+		self.Target = T
+		self.Positions = np.asarray(positions)
 
-		# # Params
-		# self.Label = 'RGG'
-		# self.K = Kappa
-		# self.N = N
-		# self.d = d
-		# self.BC = Boundary
+		# Params
+		self.Label = 'RGG'
+		self.K = Kappa
+		self.N = N
+		self.d = d
+		self.BC = Boundary
 
-		# # Param_String 
-		# if abs(float(shortcut_prob)) == 0.0 : 
-		# 	self.Param_String = "RGG_K_" + str(Kappa) + "_N_" + str(N) + "_d_" + str(d) + "_BC_" + str(Boundary)
-		# else :
-		# 	self.Param_String = "RGG_K_" + str(Kappa) + "_N_" + str(N) + "_d_" + str(d) + "_BC_" + str(Boundary) + '_short_' + str(shortcut_prob)
+		# Param_String 
+		if abs(float(shortcut_prob)) == 0.0 : 
+			self.Param_String = "RGG_K_" + str(Kappa) + "_N_" + str(N) + "_d_" + str(d) + "_BC_" + str(Boundary)
+		else :
+			self.Param_String = "RGG_K_" + str(Kappa) + "_N_" + str(N) + "_d_" + str(d) + "_BC_" + str(Boundary) + '_short_' + str(shortcut_prob)
 		
 
 class ER_Sample : 
