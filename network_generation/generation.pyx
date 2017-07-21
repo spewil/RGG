@@ -33,7 +33,6 @@ class BaseEnsemble(object):
 	def from_disk(self, path):
 		raise Exception('need to override this')
 
-
 class RGGEnsemble(BaseEnsemble):
 	def __init__(self, kappa, n, d, shortcut_prob=0, boundary='s', samples=[]):
 		self.kappa = kappa
@@ -43,10 +42,10 @@ class RGGEnsemble(BaseEnsemble):
 		self.boundary = boundary
 		self.samples = samples
 
-		# if abs(float(self.shortcut_prob)) == 0.0 :
-		# 	self.param_string = "RGG_K_" + str(self.kappa) + "_N_" + str(self.n) + "_d_" + str(self.d) + "_BC_" + str(self.boundary)
-		# else:
-		# 	self.param_string = "RGG_K_" + str(self.kappa) + "_N_" + str(self.n) + "_d_" + str(self.d) + "_BC_" + str(self.boundary) + '_short_' + str(self.shortcut_prob)
+		self.num_samples = self.get_num_samples()
+
+	def get_num_samples(self):
+		return len(self.samples)
 
 	def create_sample(self):
 		Kappa = self.kappa
@@ -120,8 +119,7 @@ class RGGEnsemble(BaseEnsemble):
 						source.append(j)
 						target.append(i)
 
-		self.samples.append(
-			RGGSample(
+		return RGGSample(
 			    source=source,
 				target=target,
 				positions=np.asarray(positions),
@@ -131,7 +129,6 @@ class RGGEnsemble(BaseEnsemble):
 				boundary=boundary,
 				shortcut_prob=shortcut_prob,
 				)
-			)
 
 	def get_param_string(self):
 		# param_string
@@ -172,12 +169,11 @@ class RGGEnsemble(BaseEnsemble):
 			data = pickle.load(fin)
 		return RGGEnsemble.from_dict(data)
 
-
 class RGGSample(object):
 	def __init__(self, source, target, positions, kappa, n, d, boundary, shortcut_prob):
 		self.source = source
 		self.target = target
-		self.positions = positions
+		self.positions = np.asarray(positions)
 		self.kappa = kappa
 		self.n = n
 		self.d = d
@@ -253,6 +249,11 @@ class RGGSample(object):
 					unmatched.remove(node)
 		return unmatched  
 
+	def find_num_unmatched(self):
+		unmatched = self.find_unmatched()
+
+		return len(unmatched)
+
 	def plot_network(self, unmatched=None, size=20, label_nodes=False):
 		
 		if self.d != 2:
@@ -327,63 +328,213 @@ class RGGSample(object):
 			positions=data['positions'],
 		)
 
+class EREnsemble(BaseEnsemble):
+	def __init__(self, kappa, n, samples=None):
+		self.kappa = kappa
+		self.n = n
+		self.samples = samples or []
 
-# class EREnsemble(BaseEnsemble):
-# 	def __init__(self, kappa, n, samples=None):
-# 		self.kappa = kappa
-# 		self.n = n
-# 		self.samples = samples or []
+	def create_sample(self) :
+		Kappa = self.kappa
+		N = self.n
+		# Params
+		self.Label = 'ER'
 
-# 	def create_sample(self) :
-# 		"""
-# 		Generates sparse adjacency matrix for an Erdos Renyi Random Graph
+		# Compute the probability required to get the desired mean degree:
+		p = Kappa/float(N)
+
+		# Empty array to store edge lists:
+
+		source = [ ]
+		target = [ ]
+
+		for i in range(N) :
+			for j in range(i+1,N) :
+
+				u = np.random.uniform(0,1.0)
+
+				if u < p :
+					# 1/2 probability for direction
+					if random() >= 0.5: # i --> j
+						source.append(i)
+						target.append(j)
+					else: # j --> i
+						source.append(j)
+						target.append(i)
+
+		# Attributes
+		self.source = source
+		self.target = target
+		
+		return ERSample(
+			    source=source,
+				target=target,
+				kappa=Kappa,
+				n=N,
+				)
+
+	def get_param_string(self):
+		# param_string
+		return "ER_K_" + str(self.kappa) + "_N_" + str(self.n) 
+
+	def to_dict(self):
+		return {
+			'kappa': self.kappa,
+			'n': self.n,
+			'samples': [s.to_dict() for s in self.samples]
+		}
+
+	@classmethod
+	def from_dict(self, data):
+		return EREnsemble(
+			kappa=data['kappa'],
+			n=data['n'],
+			samples=[ERSample.from_dict(s) for s in data['samples']],
+		)
+
+	def to_disk(self, folder='er_samples'):
+		filename = './%s/%s.pickle' % (folder, self.get_param_string())
+		with open(filename, 'w') as fout:
+			pickle.dump(self.to_dict(), fout)
+
+	@classmethod
+	def from_disk(self, path):
+		with open(path, 'r') as fin:
+			data = pickle.load(fin)
+		return EREnsemble.from_dict(data)
+
+class ERSample(object):
+	def __init__(self, source, target, kappa, n):
+		self.source = source
+		self.target = target
+		self.kappa = kappa
+		self.n = n
+
+		self.adjacency = None
+		self.adjacency_dense = None
+		self.bipartite_dict = None
+
+		self.calculate_adjacency_representation()
+		self.calculate_dictionary_representation()
+
+	def get_param_string(self):
+		# param_string
+		return "ER_K_" + str(self.kappa) + "_N_" + str(self.n) 
+
+	def calculate_adjacency_representation(self):
+		### Create A ###
+		#combine the edge lists in order to form a sparse adjacency matrix:
+		# scipy.sparse.coo_matrix(arg1, shape=None, dtype=None, copy=False)
+		# arg1 is (data, row, column)
+		A = sparse.coo_matrix(
+				(np.ones_like(self.source), (self.source, self.target)),
+				shape=(self.n, self.n),
+				dtype=float)
+		self.adjacency = A.tocsr()
+		self.adjacency_dense = self.adjacency.todense()
+
+	def calculate_dictionary_representation(self):
+		### Create D ###
+		# bipartite dictionary representation of directed graph
+
+		# build dictionary from the edge list (python)
+		nums = xrange(self.n)
+		# ['1s', '2s', '3s', ...] for the lefthand side of the bipartite
+		nodelist = (str(num) + 's' for num in nums)
+
+		# generate an empty dict of lists for targets
+		D = {k: [] for k in nodelist}
+
+		# go through and add targets to source key -- target sets
+		for idx, val in enumerate(self.source):
+			D[str(val)+'s'].append(self.target[idx])
+
+		self.bipartite_dict = D
+
+	def find_unmatched(self):
+
+		graph = self.bipartite_dict.copy() 
+
+		# list of node indices 0,1,2,...,N 
+		unmatched = range(self.n)
+
+		# find matched nodes
+		# (they will be doubled (i-->j and j-->i) ) 
+		matched = HopcroftKarp(graph).maximum_matching().values()
+		# remove the matched nodes to leave the unmatched 
+		for node in range(self.n):
+			for match in matched:
+				# if node exists in matching
+				if node == match:
+					# remove it 
+					unmatched.remove(node)
+		return unmatched  
+
+	def find_num_unmatched(self):
+		unmatched = self.find_unmatched()
+
+		return len(unmatched)
+
+	def plot_network(self, unmatched=None, size=20, label_nodes=False):
+
+		File_Name = 'plots/' + str(self.get_param_string()) + '_plot' + '.eps'
+		
+		plt.figure()
+		plt.clf
+		Gfig = open( File_Name , 'w' )
+		
+		# make a networkx graph object 
+		graph = nx.DiGraph(self.adjacency_dense)
+
+		# color the nodes 
+		if unmatched != None: 
+			colorList = []
+			for i in range(self.n):
+				if i in unmatched:
+					colorList.append('green')
+				else:
+					colorList.append('red')
+			# draw the network 
+			if label_nodes: 
+				nx.draw_networkx(graph, with_labels=True, node_color=colorList, node_size=size, width = 0.3)
+			else: 
+				nx.draw_networkx(graph, with_labels=False, node_color=colorList, node_size=size, width = 0.3)
+		else:
+			if label_nodes: 
+				nx.draw_networkx(graph, with_labels=True, node_size=20, width = 0.3)
+			else: 
+				nx.draw_networkx(graph, with_labels=False, node_size=20, width = 0.3)
+		
+		plt.savefig( File_Name , format='eps', dpi=1000 )
+
+	def mean_degree(self) :
+		Degree_array = np.array( self.adjacency_dense.sum(axis=0) ) 
+		# 2x because of directedness  
+		return 2*np.mean( Degree_array[0] )
+
+	def properties(self, *additional_properties):
+		raise NotImplementedError()
+
+	def to_dict(self):
+		return {
+			'kappa': self.kappa,
+			'n': self.n,
+			'source': self.source,
+			'target': self.target,
+		}
+
+	@classmethod
+	def from_dict(cls, data):
+		return ERSample(
+			kappa=data['kappa'],
+			n=data['n'],
+			source=data['source'],
+			target=data['target'],
+		)
 
 
-# 		Parameters
-# 		------------
+# def SFSample(object):
 
-# 		Kappa : double
-
-# 		Mean degree parameter:
-
-# 		N : int
-
-# 		Number of nodes in the network
-# 		"""
-# 		Kappa = self.kappa
-# 		N = self.n
-# 		# Params
-# 		self.Label = 'ER'
-# 		self.kappa = Kappa
-# 		self.n = N
-# 		# param_string
-# 		self.param_string = "ER_K_" + str( N*p ) + "_N_" + str(N)
-
-# 		# Compute the probability required to get the desired mean degree:
-# 		p = Kappa/float(N)
-
-# 		# Empty array to store edge lists:
-
-# 		source= [ ]
-# 		target= [ ]
-
-# 		for i in range(N) :
-# 			for j in range(i+1,N) :
-
-# 				u = np.random.uniform(0,1.0)
-
-# 				if u < p :
-# 					# 1/2 probability for direction
-# 					if random() >= 0.5: # i --> j
-# 						source.append(i)
-# 						target.append(j)
-# 					else: # j --> i
-# 						source.append(j)
-# 						target.append(i)
-
-# 		# Attributes
-# 		self.source = source
-# 		self.target = target
 
 def Top_Hat(r, r_c, pr) :
 	"""
