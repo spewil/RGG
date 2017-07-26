@@ -3,6 +3,7 @@
 import scipy
 import numpy as np
 import network_generation.generation as ng
+import os 
 
 class RGGExperiment(object):
 
@@ -39,7 +40,7 @@ class RGGExperiment(object):
 			# import data 
 			RGG = ng.RGGEnsemble(kappa,self.n,self.d,boundary=self.boundary)
 			try: 
-				RGG = ng.RGGEnsemble.from_disk('rgg_samples/'+RGG.get_param_string()+'.pickle')
+				RGG = ng.RGGEnsemble.from_disk('/Users/spencerw/Documents/DATA/rgg_samples/' + RGG.get_param_string()+'.pickle')
 			except:
 				raise ValueError('Data does not exist')
 			
@@ -118,7 +119,7 @@ class ERExperiment(object):
 			# import data 
 			ER = ng.EREnsemble(kappa,self.n)
 			try: 
-				ER = ng.EREnsemble.from_disk('er_samples/'+ER.get_param_string()+'.pickle')
+				ER = ng.EREnsemble.from_disk('/Users/spencerw/Documents/DATA/er_samples/'+ER.get_param_string()+'.pickle')
 			except:
 				raise ValueError('Data does not exist')
 			

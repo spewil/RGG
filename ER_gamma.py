@@ -20,14 +20,15 @@ for n in n_range:
     print 'import ' + str(i) + ' done'
     i += 1
     gamma_list.append(ERE.gamma)
-    gamma_std_list.append(ERE.scaling_params[1][1][1])
+    gamma_std_list.append(np.sqrt(ERE.scaling_params[1][1][1]))
     
 gamma_list = np.array(gamma_list)
 gamma_std_list = np.array(gamma_std_list)
 
 plt.clf()
 plt.errorbar(n_range,gamma_list,yerr=gamma_std_list)
+plt.title('ER Graph $k-n_D$ Scaling $\\gamma$ vs. Size $N$')
 plt.xlabel('Graph Size $N$	')
-plt.ylabel('Scaling $\\gamma$')
+plt.ylabel('$k-n_D$ Scaling $\\gamma$')
 plt.tight_layout()
 plt.savefig('./plots/ER_gamma.png')

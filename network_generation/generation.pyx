@@ -2,6 +2,7 @@
 from random import random
 from scipy import sparse
 from scipy import special
+from scipy.stats import multivariate_normal
 import numpy as np
 import pickle
 import scipy
@@ -47,6 +48,15 @@ class RGGEnsemble(BaseEnsemble):
 	def get_num_samples(self):
 		return len(self.samples)
 
+	def compute_distances(self):
+		Kappa = self.kappa
+		N = self.n
+		d = self.d
+		shortcut_prob = self.shortcut_prob
+		boundary = self.boundary
+
+		# return the distance list 
+
 	def create_sample(self):
 		Kappa = self.kappa
 		N = self.n
@@ -74,9 +84,13 @@ class RGGEnsemble(BaseEnsemble):
 		source= [ ]
 		target= [ ]
 
-		#Randomly generate the node positions in the hypercube:
 		# N-list of d-lists
-		positions = np.random.uniform(0, 1.0, (N, d))
+		# Randomly generate positions in a d-dimensional standard Normal distribution
+		if boundary = 'g':
+			positions = np.random.multivariate_normal(np.zeros(d), np.eye(d), size=N)
+		#Randomly generate the node positions in the hypercube:
+		else:
+			positions = np.random.uniform(0, 1.0, (N, d))
 
 		# number of nodes
 		cdef int n = positions.shape[0]
@@ -327,6 +341,17 @@ class RGGSample(object):
 			target=data['target'],
 			positions=data['positions'],
 		)
+
+	def to_disk(self, folder='rgg_samples'):
+		filename = './%s/%s.pickle' % (folder, self.get_param_string())
+		with open(filename, 'w') as fout:
+			pickle.dump(self.to_dict(), fout)
+
+	@classmethod
+	def from_disk(self, path):
+		with open(path, 'r') as fin:
+			data = pickle.load(fin)
+		return RGGSample.from_dict(data)
 
 class EREnsemble(BaseEnsemble):
 	def __init__(self, kappa, n, samples=None):
