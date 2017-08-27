@@ -25,16 +25,25 @@ setup(name='package',
       ext_modules = ext_modules,
      )
 
-# ext_modules=[Extension("network_generation.HopcroftKarp", # location of the resulting .so
-#              ["network_generation/HopcroftKarp.pyx"]) 
-# 			]
+ext_modules=[Extension("network_generation.Giant_Extract", # location of the resulting .so
+             ["network_generation/Giant_Extract.pyx"]) 
+			]
 
-# setup(name='package',
-#       packages=find_packages(),
-#       cmdclass = {'build_ext': build_ext},
-#       ext_modules = ext_modules,
-#       compiler_directives={'linetrace': True},
-#      )
+setup(name='package',
+      packages=find_packages(),
+      cmdclass = {'build_ext': build_ext},
+      ext_modules = ext_modules,
+     )
+
+ext_modules=[Extension("network_generation.Adjacency_Map", # location of the resulting .so
+             ["network_generation/Adjacency_Map.pyx"], language="c++" ) 
+			]
+
+setup(name='package',
+      packages=find_packages(),
+      cmdclass = {'build_ext': build_ext},
+      ext_modules = ext_modules,
+     )
 
 #Some info about compiling cython:
 
