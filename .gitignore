@@ -52,3 +52,6 @@ er_samples
 plots
 .pickle
 
+# iPython #
+###########
+*.ipynb
