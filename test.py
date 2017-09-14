@@ -1,78 +1,71 @@
-# gen test
-
-import matplotlib
-import os
 import numpy as np
-import network_generation.generation as ng
+import matplotlib.pyplot as plt 
 import experiment as ex
-import networkx as nx
-import time
-import json
+from network_generation import generation as ng
 
-# RGGE = ex.RGGExperiment( kappa_range, n, d, shortcut_prob=0, boundary='s')
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Make an RGG Sample and draw the network
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# for each of these N-d-BC ensembles with kappa_range: 
-# 	build the experiment object from the data 
-# 	store the gamma parameter in an N-d matrix 
-#		list of 3-tuples: [(d,N,gamma),(d,N,gamma),...(d,N,gamma)]
+print 'Generating RGG Data'
 
-# Experiment = ng.RGGExperiment(kappa_range,Num_Nodes,d,boundary='s')
-# print Experiment.ensembles
+kappa = 5
+n = 100
+d = 2
+boundary = 's'
+num_samples = 1
 
-# make an RGG Ensemble with solid boundarys
-# RGG = ng.RGGEnsemble(kappa,Num_Nodes,d,boundary='s')
-# generate one sample 
-# start = time.time()
-# RGG.generate_samples(n=1)
-# RGG.samples[0].plot_network()
-# print "generation time for RGG_" + RGGEs.boundary + " of " + str(Num_Nodes) + " nodes: " + str(time.time() - start)
-# export to JSON 
-# RGGEs.to_disk()
+RGG = ng.RGGEnsemble(kappa, n, d, shortcut_prob=0, boundary=boundary, num_radii=3)
+RGG.generate_samples(n=num_samples)
+RGG.to_LCC()
+sample = RGG.samples[0]
 
-# del RGGEs
+sample.plot_network(unmatched=sample.find_unmatched(),label_nodes=True,show=True)
 
-# ~~~
+print 'Mean Degree: ',sample.mean_degree()
+print 'Size of LCC: ',sample.LCC_size
+print 'Driver Nodes: ',sample.find_unmatched()
 
-# # import data from JSON
-# RGGEimport = ng.RGGEnsemble(kappa,Num_Nodes,d,boundary='s')
-# fn = RGGEimport.get_param_string()
-# RGGEimport = ng.RGGEnsemble.from_disk('rgg_samples/'+fn+'.pickle')
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Make an RGG Experiment and plot the data
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# # find unmatched nodes 
-# um0 = RGGEs.samples[0].find_unmatched()
-# print um0
-# # plot network 
-# RGGEs.samples[0].plot_network(unmatched=um0)
-# # find the mean degree
-# print RGGEs.samples[0].mean_degree()
+print 'Creating RGG Experiment'
 
-# # ~~~
+fig = plt.figure()
+ax = fig.add_subplot(1,1,1)
 
-# # make an ER graph
-# start = time.time()
-# ER = ng.EREnsemble(kappa,Num_Nodes)
-# ER.create_sample()
-# print "generation time for ER of " + str(Num_Nodes) + " nodes: " + str(time.time() - start)
+kappa_range = [1,3,5,10,15,20]
+n = 100 # change to 1000 for interpretable results
+num_radii = 10
+boundary = 's' #(or 'p' or 'g')
+d_range = [2,3,6,9,15,25]
 
-# ER.samples[0].plot_network()
-# # find unmatched nodes 
-# um0 = ER.samples[0].find_unmatched()
-# print um0
-# # plot network 
-# ER.samples[0].plot_network(unmatched=um0)
-# # find the mean degree
-# print ER.samples[0].mean_degree()
+colors = ['ro','bo','go','ko','mo','co']
+i=0
 
-# # compare with networkx
-# from scipy import special
-# import scipy
-# r = (1.0/((3.141592)**0.5) )*(( ((kappa)/Num_Nodes)*scipy.special.gamma( (d +2.0)/2.0  )   )**(1.0/d ) )
+# if the following returns "Data Not Found", 
+# Generate the data using the script "generate_RGG_nD_k_data.py"
+# using the required parameters.
 
-# start = time.time()
-# RGG_nx = nx.random_geometric_graph(Num_Nodes,r)
-# print "generation time for RGG_nx of " + str(Num_Nodes) + " nodes: " + str(time.time() - start)
+handles = []
+labels = []
+for d in d_range:
+    RGG = ex.RGGExperiment(kappa_range, n, d, shortcut_prob=0, boundary=boundary, num_radii=num_radii)
+    RGG.to_LCC()
+    for ensemble in RGG.ensembles:
+        for sample in ensemble.samples:
+            data, = ax.plot(sample.mean_degree(),float(sample.find_num_unmatched())/sample.LCC_size,colors[i],markersize=2)
+    handles.append(data)
+    labels.append('d = '+str(d))
+    print 'dimension ',str(d),' is done'
+    
+    i += 1
 
-# start = time.time()
-# ER_nx = nx.gnp_random_graph(Num_Nodes,0.25)
-# print "generation time for ER_nx of " + str(Num_Nodes) + " nodes: " + str(time.time() - start)
+ax.set_xlabel('Mean Sample Degree $\\langle{k}\\rangle$')
+ax.set_ylabel('Fraction of Driver Nodes $n_D$')
+ax.legend(handles,labels)
+fig.tight_layout()
+# fig.savefig('./plots/scatter_N_' + str(n) + '.eps', dpi=1000)
 
+plt.show()

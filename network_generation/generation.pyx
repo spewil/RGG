@@ -471,7 +471,6 @@ class RGGSample(object):
 				plt.xlim([0,1])
 				plt.ylim([0,1])
 
-			
 			if save == True: 
 				plt.savefig( File_Name , format='eps', dpi=1000 )
 

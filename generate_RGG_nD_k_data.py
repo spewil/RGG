@@ -17,7 +17,7 @@ num_samples = 10
 print 'running ' + str(len(n_range)*len(d_range)*len(boundaries)*len(kappa_range)) + ' generations'
 i=1
 
-## RGGs ##
+## Generate RGG Data ##
 for kappa in kappa_range:
     for n in n_range:
         for d in d_range:
@@ -28,3 +28,18 @@ for kappa in kappa_range:
                 RGG.to_disk()
                 print 'saved run ' + str(i)
                 i+=1 
+
+# GENERATE ER DATA 
+print 'running ' + str(len(n_range)*len(kappa_range)) + ' generations'
+i=1
+for kappa in kappa_range:
+    for n in n_range:
+        # make an ER Ensemble
+        ER = ng.EREnsemble(kappa,n)
+        # generate samples 
+        # sample data is stored in the object 
+        ER.generate_samples(n=num_samples)
+        # data to disk 
+        ER.to_disk()
+        print 'saved run ' + str(i)
+        i+=1 
