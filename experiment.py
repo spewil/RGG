@@ -46,7 +46,7 @@ class RGGExperiment(object):
 			nD_list.append(ensemble_nD)	
 			deg_list.append(ensemble_deg)
 
-		return nD_list, deg_list 
+		return deg_list, nD_list
 		
 
 	def find_nD_stats(self):

@@ -189,8 +189,11 @@ class RGGEnsemble(BaseEnsemble):
 				dij = dij**0.5
 
 				# compute the connection probability:
-				# returns 1 if within radius, shortcut_prob otherwise
-				probability = Top_Hat(dij , r_c , shortcut_prob)
+				# returns 1 if within radius, shortcut prob otherwise
+				if dij < r_c :
+					probability = 1.0
+				else :
+					probability = shortcut_prob
 
 				u = np.random.uniform(0,1.0)
 
@@ -392,18 +395,11 @@ class RGGSample(object):
 		self.positions = self.positions[LCC_vec]
 
 		#### update the dictionary 
-		# convert the LCC adjacency into a dictionary 
-		nums = xrange(self.LCC_size)
-		nodelist = (str(num) + 's' for num in nums)
-		D = {k: [] for k in nodelist}
-		
-		# row=out, col=in 
-		# nonzero returns tuple of row,col indices of nonzeros 
-		outgoing, incoming = (np.nonzero(LCC_adjacency_dense))
-		for i in xrange(len(outgoing)):
-			D[str(outgoing[i])+'s'].append(incoming[i])
-
-		self.bipartite_dict = D
+		# Note: if node is in the LCC, then all its neighbors are, too!
+		# pop all values that AREN'T in the LCC
+		for node in range(self.n):
+			if node not in LCC_vec:
+				self.bipartite_dict.pop(str(node)+'s',None)
 
 	def find_unmatched(self):
 
@@ -889,7 +885,10 @@ class GaussianEnsemble(BaseEnsemble):
 
 				# compute the connection probability:
 				# returns 1 if within radius, shortcut_prob otherwise
-				probability = Top_Hat(dij , r_c , shortcut_prob)
+				if dij < r_c :
+					probability = 1.0
+				else :
+					probability = shortcut_prob
 
 				u = np.random.uniform(0,1.0)
 
@@ -984,7 +983,10 @@ class GaussianEnsemble(BaseEnsemble):
 
 				# compute the connection probability:
 				# returns 1 if within radius, shortcut_prob otherwise
-				probability = Top_Hat(dij , r_c , shortcut_prob)
+				if dij < r_c :
+					probability = 1.0
+				else :
+					probability = shortcut_prob
 
 				u = np.random.uniform(0,1.0)
 
@@ -1259,37 +1261,3 @@ class GaussianSample(object):
 			data = pickle.load(fin)
 		return GaussianSample.from_dict(data)
 
-
-######### Connection Function #########
-
-def Top_Hat(r, r_c, pr) :
-	"""
-	Top hat function with a = 1 , b = pr
-
-	Parameters
-	-----------
-	r : float
-
-	Value we wish to evaluate the top-hat function at
-
-	r_c : float
-
-	Width of the top hat
-
-	pr : float
-
-	height of the lower section of the top hat function. This corresponds
-	to the probability of having long-range shortcuts in the RGG class.
-
-	Returns
-	----------
-	P : float
-
-	Value of the top hat function at r
-
-	"""
-	if r < r_c :
-		P = 1.0
-	else :
-		P = pr
-	return P
